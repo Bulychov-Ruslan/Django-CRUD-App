@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block title %} Classes {% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="container col-5 mb-3">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Students</a>
+          </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'classes' %}">Classes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'stuclasses' %}">Student and Classes</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container col-5">
+
+        {% if classes2 %}
+
+        <form  method="POST" action="{% url 'update_classes' classes2.ClassID %}">
+        {% csrf_token %}
+            <div class="col mb-3">
+                <label class="form-label">Class ID</label>
+                <input type="number" class="form-control" value="{{classes2.ClassID}}" name="ClassID" required="required">
+            </div>
+            <div class="row mt-3">
+                  <div class="col mb-3">
+                      <label class="form-label">Term</label>
+                      <input type="text" class="form-control" value="{{classes2.Term}}" name="Term" required="required">
+                  </div>
+                  <div class="col mb-3">
+                      <label class="form-label">Year</label>
+                      <input type="number" class="form-control" value="{{classes2.Year}}" name="Year" required="required">
+                  </div>
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Instructor</label>
+                <input type="text" class="form-control" value="{{classes2.Instructor}}" name="Instructor" required="required">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Classroom</label>
+                <input type="text" class="form-control" value="{{classes2.Classroom}}" name="Classroom" required="required">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Class Time</label>
+                <input type="text" class="form-control" value="{{classes2.ClassTime}}" name="ClassTime" required="required">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">CourseID</label>
+                <input type="text" class="form-control" value="{{classes2.CourseID_id}}" name="CourseID_id" required="required">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+
+        {% else %}
+
+        <form  method="POST" action="{% url 'add_classes' %}">
+        {% csrf_token %}
+            <div class="col mb-3">
+                <label class="form-label">Class ID</label>
+                <input type="number" class="form-control" name="ClassID" required="required">
+            </div>
+            <div class="row mt-3">
+                  <div class="col mb-3">
+                      <label class="form-label">Term</label>
+                      <input type="text" class="form-control" name="Term" required="required">
+                  </div>
+                  <div class="col mb-3">
+                      <label class="form-label">Year</label>
+                      <input type="number" class="form-control" name="Year" required="required">
+                  </div>
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Instructor</label>
+                <input type="text" class="form-control" name="Instructor" required="required">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Classroom</label>
+                <input type="text" class="form-control" name="Classroom" required="required">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Class Time</label>
+                <input type="text" class="form-control" name="ClassTime" required="required">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">CourseID</label>
+                <input type="text" class="form-control" name="CourseID_id" required="required">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+        <div class="container text center col-5 mt-2">
+        {% for message in messages %}
+        <h3 class="alert alert-success" style="text-align: center">{{ message }}</h3>
+        {% endfor %}
+        </div>
+
+     <table class="table mt-5">
+      <thead>
+        <tr>
+          <th>Class ID</th>
+          <th>Term</th>
+          <th>Year</th>
+          <th>Instructor</th>
+          <th>Classroom</th>
+          <th>Class time</th>
+          <th>Course ID</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+        </tr>
+      </thead>
+    {% for a in classes_list %}
+      <tbody>
+        <tr>
+          <td>{{a.ClassID}}</td>
+          <td>{{a.Term}}</td>
+          <td>{{a.Year}}</td>
+          <td>{{a.Instructor}}</td>
+          <td>{{a.Classroom}}</td>
+          <td>{{a.ClassTime}}</td>
+          <td>{{a.CourseID_id}}</td>
+          <td><a href="{% url 'edit_classes' a.ClassID %}"><button class="btn btn-primary">Update</button></a></td>
+          <td><a href="{% url 'delete_classes' a.ClassID %}"><button class="btn btn-danger">Delete</button></a></td>
+        </tr>
+      </tbody>
+    {% endfor %}
+    </table>
+
+    <table class="table table-light mt-5">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Аты</th>
+          <th>Жөні</th>
+          <th>Курстар атаулары</th>
+          <th>Бағалары</th>
+          <th>Жылы</th>
+          <th>Семестрі туралы </th>
+        </tr>
+      </thead>
+    {% for i in students %}
+        <tbody>
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{i.FirstName}}</td>
+          <td>{{i.LastName}}</td>
+          <td>{{i.CourseName}}</td>
+          <td>{{i.Grade_id}}</td>
+          <td>{{i.Year}}</td>
+          <td>{{i.CourseDesc}}</td>
+        </tr>
+      </tbody>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block title %} Students {% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="container col-5 mb-3">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Students</a>
+          </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'classes' %}">Classes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'stuclasses' %}">Student and Classes</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container col-5">
+
+        {% if student2 %}
+
+        <form  method="POST" action="{% url 'update_student' student2.StudentID %}">
+        {% csrf_token %}
+                <div class="col mb-3">
+                    <label class="form-label">Student ID</label>
+                    <input type="number" class="form-control" value="{{student2.StudentID}}" name="StudentID" required="required">
+                </div>
+            <div class="row mt-2">
+                  <div class="col mb-3">
+                      <label class="form-label">First Name</label>
+                      <input type="text" class="form-control" value="{{student2.FirstName}}" name="FirstName" required="required">
+                  </div>
+                  <div class="col mb-3">
+                      <label class="form-label">Last Name</label>
+                      <input type="text" class="form-control" value="{{student2.LastName}}" name="LastName" required="required">
+                  </div>
+                 <div class="col mb-3">
+                     <label class="form-label">Middle Name</label>
+                     <input type="text" class="form-control" value="{{student2.MiddleName}}" name="MiddleName" required="required">
+                  </div>
+            </div>
+            <div class="row mt-2">
+                 <div class="col mb-3">
+                     <label class="form-label">Address-1</label>
+                     <input type="text" class="form-control" value="{{student2.Addr1}}" name="Addr1" required="required">
+                  </div>
+                 <div class="col mb-3">
+                     <label class="form-label">Address-2</label>
+                     <input type="text" class="form-control" value="{{student2.Addr2}}" name="Addr2" required="required">
+                  </div>
+            </div>
+             <div class="row mt-2">
+                 <div class="col mb-3">
+                     <label class="form-label">City</label>
+                     <input type="text" class="form-control" value="{{student2.City}}" name="City" required="required">
+                  </div>
+                 <div class="col mb-3">
+                     <label class="form-label">State Province</label>
+                     <input type="text" class="form-control" value="{{student2.StateProvince}}" name="StateProvince" required="required">
+                 </div>
+                 <div class="col mb-3">
+                     <label class="form-label">Country</label>
+                     <input type="text" class="form-control" value="{{student2.Country}}" name="Country" required="required">
+                 </div>
+             </div>
+             <div class="row mt-2">
+                <div class="col mb-3">
+                     <label class="form-label">Postal Code</label>
+                     <input type="text" class="form-control" value="{{student2.PostalCode}}" name="PostalCode" required="required">
+                </div>
+                 <div class="col mb-3">
+                     <label class="form-label">Email</label>
+                     <input type="email" class="form-control" value="{{student2.Email}}" name="Email" required="required">
+                 </div>
+             </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+
+        {% else %}
+
+        <form  method="POST" action="{% url 'add_student' %}">
+        {% csrf_token %}
+            <div class="col mb-3">
+                <label class="form-label">Student ID</label>
+                <input type="number" class="form-control" name="StudentID" required="required">
+            </div>
+            <div class="row mt-2">
+                  <div class="col mb-3">
+                      <label class="form-label">First Name</label>
+                      <input type="text" class="form-control" name="FirstName" required="required">
+                  </div>
+                  <div class="col mb-3">
+                      <label class="form-label">Last Name</label>
+                      <input type="text" class="form-control" name="LastName" required="required">
+                  </div>
+                 <div class="col mb-3">
+                     <label class="form-label">Middle Name</label>
+                     <input type="text" class="form-control" name="MiddleName" required="required">
+                  </div>
+            </div>
+            <div class="row mt-2">
+                 <div class="col mb-3">
+                     <label class="form-label">Address-1</label>
+                     <input type="text" class="form-control" name="Addr1" required="required">
+                  </div>
+                 <div class="col mb-3">
+                     <label class="form-label">Address-2</label>
+                     <input type="text" class="form-control" name="Addr2" required="required">
+                  </div>
+            </div>
+             <div class="row mt-2">
+                 <div class="col mb-3">
+                     <label class="form-label">City</label>
+                     <input type="text" class="form-control" name="City" required="required">
+                  </div>
+                 <div class="col mb-3">
+                     <label class="form-label">State Province</label>
+                     <input type="text" class="form-control" name="StateProvince" required="required">
+                 </div>
+                 <div class="col mb-3">
+                     <label class="form-label">Country</label>
+                     <input type="text" class="form-control" name="Country" required="required">
+                 </div>
+             </div>
+             <div class="row mt-2">
+                <div class="col mb-3">
+                     <label class="form-label">Postal Code</label>
+                     <input type="text" class="form-control" name="PostalCode" required="required">
+                </div>
+                 <div class="col mb-3">
+                     <label class="form-label">Email</label>
+                     <input type="email" class="form-control" name="Email" required="required">
+                 </div>
+             </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+        <div class="container text center col-5 mt-2">
+        {% for message in messages %}
+        <h3 class="alert alert-success" style="text-align: center">{{ message }}</h3>
+        {% endfor %}
+        </div>
+
+     <table class="table mt-5">
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Middle Name</th>
+          <th>Address1</th>
+          <th>Address2</th>
+          <th>City</th>
+          <th>State Province</th>
+          <th>Country</th>
+          <th>Postal Code</th>
+          <th>Email</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+        </tr>
+      </thead>
+    {% for a in student_list %}
+      <tbody>
+        <tr>
+          <td>{{a.StudentID}}</td>
+          <td>{{a.FirstName}}</td>
+          <td>{{a.LastName}}</td>
+          <td>{{a.MiddleName}}</td>
+          <td>{{a.Addr1}}</td>
+          <td>{{a.Addr2}}</td>
+          <td>{{a.City}}</td>
+          <td>{{a.StateProvince}}</td>
+          <td>{{a.Country}}</td>
+          <td>{{a.PostalCode}}</td>
+          <td>{{a.Email}}</td>
+          <td><a href="{% url 'edit_student' a.StudentID %}"><button class="btn btn-primary">Update</button></a></td>
+          <td><a href="{% url 'delete_student' a.StudentID %}"><button class="btn btn-danger">Delete</button></a></td>
+        </tr>
+      </tbody>
+    {% endfor %}
+    </table>
+
+
+    <table class="table table-light mt-5">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Аты</th>
+          <th>Жөні</th>
+          <th>Курстар атаулары</th>
+          <th>Бағалары</th>
+          <th>Жылы</th>
+          <th>Семестрі туралы </th>
+        </tr>
+      </thead>
+    {% for i in students %}
+        <tbody>
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{i.FirstName}}</td>
+          <td>{{i.LastName}}</td>
+          <td>{{i.CourseName}}</td>
+          <td>{{i.Grade_id}}</td>
+          <td>{{i.Year}}</td>
+          <td>{{i.CourseDesc}}</td>
+        </tr>
+      </tbody>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

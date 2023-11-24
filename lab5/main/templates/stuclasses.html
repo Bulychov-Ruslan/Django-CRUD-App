@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %} Students and Classes {% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="container col-5 mb-3">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Students</a>
+          </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'classes' %}">Classes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'stuclasses' %}">Students and Classes</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container col-5">
+
+        {% if stuclasses2 %}
+
+        <form  method="POST" action="{% url 'update_stuclasses' stuclasses2.id %}">
+        {% csrf_token %}
+            <div class="col mb-3">
+                <label class="form-label">Class ID</label>
+                <input type="number" class="form-control" value="{{stuclasses2.ClassID_id}}" name="ClassID_id" required="required">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Grade</label>
+                <select class="form-select" name="Grade_id">
+                    <option selected>Select Grade</option>
+                    <option>A+</option>
+                    <option>A</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B</option>
+                    <option>B-</option>
+                    <option>C+</option>
+                    <option>C</option>
+                    <option>C-</option>
+                    <option>D+</option>
+                    <option>D</option>
+                    <option>D-</option>
+                    <option>F</option>
+                    <option>I</option>
+                    <option>WF</option>
+                    <option>WP</option>
+                </select>
+                </select>
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Student ID</label>
+                <input type="number" class="form-control" value="{{stuclasses2.StudentID_id}}" name="StudentID_id" required="required">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+
+        {% else %}
+
+        <form  method="POST" action="{% url 'add_stuclasses' %}">
+        {% csrf_token %}
+            <div class="col mb-3">
+                <label class="form-label">Class ID</label>
+                <input type="number" class="form-control" name="ClassID_id" required="required">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Grade</label>
+                <select class="form-select" name="Grade_id">
+                    <option selected>Select Grade</option>
+                    <option>A+</option>
+                    <option>A</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B</option>
+                    <option>B-</option>
+                    <option>C+</option>
+                    <option>C</option>
+                    <option>C-</option>
+                    <option>D+</option>
+                    <option>D</option>
+                    <option>D-</option>
+                    <option>F</option>
+                    <option>I</option>
+                    <option>WF</option>
+                    <option>WP</option>
+                </select>
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Student ID</label>
+                <input type="number" class="form-control" name="StudentID_id" required="required">
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+        <div class="container text center col-5 mt-2">
+        {% for message in messages %}
+        <h3 class="alert alert-success" style="text-align: center">{{ message }}</h3>
+        {% endfor %}
+        </div>
+
+     <table class="table mt-5">
+      <thead>
+        <tr>
+          <th>Class ID</th>
+          <th>Grade</th>
+          <th>Student ID</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+        </tr>
+      </thead>
+    {% for a in stuclasses_list %}
+      <tbody>
+        <tr>
+          <td>{{a.ClassID_id}}</td>
+          <td>{{a.Grade_id}}</td>
+          <td>{{a.StudentID_id}}</td>
+          <td><a href="{% url 'edit_stuclasses' a.id %}"><button class="btn btn-primary">Update</button></a></td>
+          <td><a href="{% url 'delete_stuclasses' a.id %}"><button class="btn btn-danger">Delete</button></a></td>
+        </tr>
+      </tbody>
+    {% endfor %}
+    </table>
+
+    <table class="table table-light mt-5">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Аты</th>
+          <th>Жөні</th>
+          <th>Курстар атаулары</th>
+          <th>Бағалары</th>
+          <th>Жылы</th>
+          <th>Семестрі туралы </th>
+        </tr>
+      </thead>
+    {% for i in students %}
+        <tbody>
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{i.FirstName}}</td>
+          <td>{{i.LastName}}</td>
+          <td>{{i.CourseName}}</td>
+          <td>{{i.Grade_id}}</td>
+          <td>{{i.Year}}</td>
+          <td>{{i.CourseDesc}}</td>
+        </tr>
+      </tbody>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}
